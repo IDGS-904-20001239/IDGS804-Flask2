@@ -1,43 +1,36 @@
-{% extends "layout.html" %}
-
+{% extends 'layout.html' %}
 {% block content %}
-    <div class="col-xs-6 text-center">
-    {%from "_macros.html" import render_firld %}
-    <form action="" method="POST" novalidate>
-    {{form.csrf_token}}
-    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
-        <div class="row control-group">
-
-           
-        </div>
-        {{render_firld(form.español)}}
-        {{render_firld(form.ingles)}}
-        <input type="submit" id="al" name="al" value="Guardar">
-        <br><br>
-        <label class="form-label"><b>Palabra a Traducir</b></label>
-        <input type="text" ><br>
-    </form>
-    <form action="/traductor2" method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <div class="row control-group">
-            <div>
-                <label class="form-label"><b>Idioma al que deseas Traducir</b></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <label class="form-label"><b>Español</b></label>
-                <input type="radio" id="1" name="btnTraductor" value="1"><br>
-                <label class="form-label"><b>Ingles</b></label>
-                <input type="radio" id="2" name="btnTraductor" value="2">
-               
+{% from '_macros.html' import render_firld %}
+<div class="container-fluid">
+    <form action="" method="post" novalidate>
+        {{form.csrf_token}}
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <div class="col-xs-6 text-center">
+            <h3>Ingresa las Palabras a Guardar</h3>
+            <div class="row control_group">
+                {{render_firld(form.español)}}
+                {{render_firld(form.ingles)}}
             </div>
-            <br>
-           
-            <input type="submit" value="Traducir" class="btn btn-success">
+            <input type="submit" value="Guardar" id="btnGuardar" name="btnGuardar" class="btn btn-success">
+            <br><br>
         </div>
-</form>
-<!-- <div class="col-md-4">
-<h1>La traduccion es: {{datos[0]}}</h1><br>
-<h1>La traduccion es: {{datos[1]}}</h1>
-
-    <h1></h1><br>
-
-</div> -->
-{% endblock %}
+        <div class="col-xs-6 text-center">
+            <h3>Ingresa la Palabra a Traducir</h3>
+            <div class="row control_group">
+                <input type="radio" name="translate" value="spanish"> Español
+                <input type="text" name="txtSpanish" id="txtSpanish">
+                <br><br>
+                <input type="radio" name="translate" value="english"> Ingles
+                <input type="text" name="txtEnglish" id="txtEnglish">
+                <br>
+            </div>
+            <input type="submit" value="Traducir" id="btnTraducir" name="btnTraducir" class="btn btn-success">
+            <br>
+            <br>
+            <h1>
+                La traducción es: {{palabraEncontrada}}
+            </h1>
+        </div>
+    </form>
+</div>
+{% endblock %}

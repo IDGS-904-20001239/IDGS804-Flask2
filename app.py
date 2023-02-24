@@ -71,15 +71,32 @@ def calculos():
 @app.route("/traductor", methods=['GET','POST'])
 def tradu():
     reg_tradu=forms.TraduForm(request.form)
-    datos=list()
-    if request.method=='POST' and reg_tradu.validate():
-        español=(str(datos.append(reg_tradu.español.data)))
-        ingles=(str(datos.append(reg_tradu.ingles.data)))
-        f=open('traductor.txt','a')
-        f.write(str('\n'+datos[0]))
-        f.write(str('\n'+datos[1]))
+    palabraEncontrada = ''
+    if(request.method == 'POST' and reg_tradu.validate()):
+        btnGuardar = request.form.get('btnGuardar')
+        btnTraducir = request.form.get('btnTraducir')
+        if(btnGuardar == 'Guardar'):    
+            file = open('traductor.txt', 'a')
+            file.write('\n' + reg_tradu.español.data.upper() + '\n' + reg_tradu.ingles.data.upper())
+            file.close()
+        if(btnTraducir == 'Traducir'):
+            opcion = request.form.get('translate')
+            file = open('traductor.txt', 'r')
+            palabras = [linea.rstrip('\n') for linea in file]
+            if(opcion == 'spanish'):
+                spanishWord = request.form.get('txtSpanish')
+                for posicion in range(len(palabras)):
+                    if(palabras[posicion] == spanishWord.upper()):
+                        palabraEncontrada = palabras[posicion - 1]
+            elif(opcion == 'english'):
+                englishWord = request.form.get('txtEnglish')
+                for posicion in range(len(palabras)):
+                    if(palabras[posicion] == englishWord.upper()):
+                        palabraEncontrada = palabras[posicion + 1]
+                        print(palabraEncontrada)
 
-    return render_template("Traductor.html",form=reg_tradu,datos=datos)
+
+    return render_template("Traductor.html",form=reg_tradu,palabraEncontrada = palabraEncontrada)
 
 @app.route("/cookie", methods=['GET','POST'])
 def cookie():
