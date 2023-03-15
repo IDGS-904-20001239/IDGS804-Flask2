@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    
+    <table class="table">
+        <tr>
+            <th>Banda 1</th>
+            <th>Banda 2</th>
+            <th>Banda 3</th>
+            <th>Valor</th>
+            <th>Minimo</th>
+            <th>Maximo</th>
+        </tr>
+        {% from '_macros.html' import cell %}
+        {% for i in data %}
+            {{cell(i.color1, i.color2, i.color3, i.valor, i.min, i.max)}}
+        {% endfor %}
+    </table>
+    
+</div>
+
+
+<style>
+    .negro{
+        background-color: black;
+    }
+     .cafe{
+        background-color: brown;
+    }
+     .rojo{
+        background-color: red;
+    }
+     .naranja{
+        background-color: orange;
+    }
+     .amarillo{
+        background-color: yellow;
+    }
+    
+    .verde{
+        background-color: green;
+                }
+    .azul{
+        background-color: blue;
+                }
+    .violeta{
+        background-color: purple;
+                }
+    .gris{
+        background-color: gray;
+
+                }
+    .blanco{
+        background-color: white;
+}
+</style>
+
+{% endblock %}
